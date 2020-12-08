@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>ToDo list</title>
+    <style>
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        h1 {
+            background: grey;
+            color: white;
+            margin: 0;
+            padding: 10px 20px;
+            font-size: 24px;
+            font-weight: normal
+        }
+
+        .fa-plus {
+            float: right
+        }
+
+        .fa-trash {
+            margin: 10px;
+        }
+
+        li {
+            background: rgb(148, 148, 148);
+            height: 40px;
+            line-height: 40px;
+            color: white;
+            padding: 10px;
+
+        }
+
+        span {
+            background: red;
+            height: 40px;
+            margin-right: 20px;
+            text-align: center;
+            color: white;
+            width: 0;
+            display: inline-block;
+
+        }
+
+        li:hover span {
+            width: 40px;
+            opacity: 1.0
+        }
+
+        #main-input {
+            font-size: 18px;
+            color: blue;
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            border: 3px dotted blueviolet;
+        }
+
+        #main-input:focus {
+            background: white;
+            border: 3px solid black;
+            outline: none
+        }
+
+        .completed {
+            color: gray;
+            text-decoration: line-through
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="container">
+        <h1>To-Do List <i class="fa fa-plus "> Add new task/event</i></h1> <input type="text"
+            placeholder="Click to add new task/event...........!" id="main-input">
+        <ul id='parentUL'>
+           
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+
+            // $("ul").on("click", "li", function () {
+            //     $(this).toggleClass("completed");
+            // });
+
+            $("ul").on("click", ".del", function (event) {
+                $(this).parent().fadeOut(500, function () {
+                    $(this).remove();
+                    console.log('delete par click hua')
+                });
+                event.stopPropagation();
+            });
+
+            $("input[type='text']").keypress(function (event) {
+                if (event.which === 13) {
+                    var todoText = $(this).val();
+                    if(todoText != ""){
+                    $(this).val("");
+                    $("ul").append("<li><span class='del'><i class='fa fa-trash'></i></span><span class='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></span><label id='edit-text'>"+todoText +"</label> <input type='text'id='inp'> <button type='button' id='done'>edit/done</button> </li>")
+                    }
+                }
+            });
+
+            $(".fa-plus").click(function () {
+                $("input[type='text']").fadeToggle();
+            });
+
+            $("#parentUL").on("click",'.edit', function (){
+                console.log('edit par click hua')
+                var prevalue = $(this).siblings('#edit-text').html();
+                console.log(prevalue);
+                todoText=$(this).siblings('#inp').val(prevalue);
+                
+
+                
+              
+                
+            });
+
+
+            
+
+
+            
+
+    
+                                        //             var oriVal;
+                                        // $("#parentUL").on('click', 'li', function () {
+                                        //     oriVal = $(this).text();
+                                        //     $(this).text("");
+                                        //     $("<input type='text'>").appendTo(this).focus();
+                                        // });
+                                        // $("#parentUL").on('focusout', 'li > input', function () {
+                                        //     var $this = $(this);
+                                        //     $this.parent().text($this.val() || oriVal);
+                                        //     $this.remove(); // Don't just hide, remove the element.
+                                        // });
+
+
+            });
+
+    </script>
+</body>
+
+</html>
